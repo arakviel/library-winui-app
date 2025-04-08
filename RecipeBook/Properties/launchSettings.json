@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "RecipeBook (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "RecipeBook (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
