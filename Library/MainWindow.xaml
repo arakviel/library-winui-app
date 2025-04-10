@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Window
-    x:Class="RecipeBook.MainWindow"
+    x:Class="Library.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:RecipeBook"
-    Title="RecipeBook">
+    xmlns:local="using:Library"
+    Title="Library">
 
     <Window.SystemBackdrop>
         <MicaBackdrop />
@@ -14,13 +14,14 @@
         x:Name="MainNavigationView"
         IsBackButtonVisible="Collapsed"
         IsSettingsVisible="False"
-        PaneTitle="Книга рецептів"
+        PaneTitle="Бібліотека"
         SelectionChanged="MainNavigationView_SelectionChanged">
+
         <NavigationView.MenuItems>
             <NavigationViewItem
-                Content="Усі рецепти"
+                Content="Усі книги"
                 IsSelected="True"
-                Tag="AllRecipesPage">
+                Tag="AllBooksPage">
                 <NavigationViewItem.Icon>
                     <FontIcon Glyph="&#xE8A5;" />
                 </NavigationViewItem.Icon>
@@ -30,7 +31,7 @@
                     <FontIcon Glyph="&#xE16C;" />
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
-            <NavigationViewItem Content="Додати рецепт" Tag="AddRecipePage">
+            <NavigationViewItem Content="Додати книгу" Tag="AddBookPage">
                 <NavigationViewItem.Icon>
                     <FontIcon Glyph="&#xE109;" />
                 </NavigationViewItem.Icon>

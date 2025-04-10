@@ -13,10 +13,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Pages\AddRecipePage.xaml" />
-    <None Remove="Pages\AllRecipesPage.xaml" />
     <None Remove="Pages\CategoryPage.xaml" />
     <None Remove="Pages\SettingsPage.xaml" />
+    <None Remove="Styles\ButtonStyles.xaml" />
+    <None Remove="Styles\TextBlockStyles.xaml" />
+    <None Remove="Themes\Dark.xaml" />
+    <None Remove="Themes\Light.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,12 +48,22 @@
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250310001" />
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Styles\TextBlockStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Themes\Dark.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="Pages\SettingsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Pages\AddRecipePage.xaml">
+    <Page Update="Pages\AddBookPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
@@ -61,7 +73,17 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Pages\AllRecipesPage.xaml">
+    <Page Update="Pages\AllBooksPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Styles\ButtonStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Themes\Light.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Page
-    x:Class="RecipeBook.Pages.AllRecipesPage"
+    x:Class="Library.Pages.SettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:RecipeBook.Pages">
+    xmlns:local="using:Library.Pages">
 
     <Grid>
         <TextBlock
@@ -11,6 +11,6 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
             FontSize="24"
-            Text="All Recipes" />
+            Text="Settings" />
     </Grid>
 </Page>

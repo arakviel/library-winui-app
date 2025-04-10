@@ -1,10 +1,12 @@
 ﻿using Microsoft.UI.Xaml;
 
 
-namespace RecipeBook;
+namespace Library;
 
 public partial class App : Application
 {
+    public static Window MainWindow { get; set; } = new MainWindow();
+
     public App()
     {
         this.InitializeComponent();
@@ -12,10 +14,8 @@ public partial class App : Application
 
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
-        window = new MainWindow();
-        window.Activate();
-        window.ExtendsContentIntoTitleBar = true;
+        //MainWindow = new MainWindow();
+        MainWindow.Activate();
+        MainWindow.ExtendsContentIntoTitleBar = true;
     }
-
-    private Window? window;
 }
