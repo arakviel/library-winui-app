@@ -6,11 +6,6 @@
     xmlns:local="using:Library.Pages">
 
     <Grid>
-        <TextBlock
-            Margin="0,20,0,0"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            FontSize="24"
-            Text="By Category" />
+        <Button Style="{StaticResource ThemedButtonStyle}">Click ME</Button>
     </Grid>
 </Page>
