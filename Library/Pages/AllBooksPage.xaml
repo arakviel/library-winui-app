@@ -13,59 +13,7 @@
             <ItemsView.ItemTemplate>
                 <DataTemplate x:DataType="entity:Book">
                     <ItemContainer>
-                        <Border
-                            MaxWidth="350"
-                            Padding="12"
-                            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                            BorderThickness="1"
-                            CornerRadius="{ThemeResource OverlayCornerRadius}">
-                            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto">
-                                <Image
-                                    Grid.RowSpan="4"
-                                    Grid.Column="0"
-                                    Width="80"
-                                    Height="120"
-                                    Margin="0,0,12,0"
-                                    VerticalAlignment="Top"
-                                    Source="{x:Bind ImagePath, Mode=OneWay}"
-                                    Stretch="UniformToFill" />
-
-                                <TextBlock
-                                    Grid.Row="0"
-                                    Grid.Column="1"
-                                    MaxLines="2"
-                                    Style="{StaticResource SubtitleTextBlockStyle}"
-                                    Text="{x:Bind Title, Mode=OneWay}"
-                                    TextWrapping="Wrap" />
-
-                                <TextBlock
-                                    Grid.Row="1"
-                                    Grid.Column="1"
-                                    Margin="0,4,0,0"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    Style="{StaticResource BodyTextBlockStyle}"
-                                    Text="{x:Bind Author, Mode=OneWay}"
-                                    TextWrapping="Wrap" />
-
-                                <TextBlock
-                                    Grid.Row="2"
-                                    Grid.Column="1"
-                                    Margin="0,4,0,0"
-                                    Style="{StaticResource CaptionTextBlockStyle}"
-                                    Text="{x:Bind Category, Mode=OneWay}"
-                                    TextWrapping="Wrap" />
-
-                                <TextBlock
-                                    Grid.Row="3"
-                                    Grid.Column="1"
-                                    Margin="0,8,0,0"
-                                    MaxLines="3"
-                                    Style="{StaticResource BodyTextBlockStyle}"
-                                    Text="{x:Bind Description, Mode=OneWay}"
-                                    TextWrapping="Wrap" />
-                            </Grid>
-                        </Border>
+                        <controls:BookCard Book="{x:Bind Mode=OneWay}" />
                     </ItemContainer>
                 </DataTemplate>
             </ItemsView.ItemTemplate>

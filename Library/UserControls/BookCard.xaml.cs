@@ -1,28 +1,39 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+using Library.Entities;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Microsoft.UI.Xaml.Media.Imaging;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace RecipeBook.UserControls
+namespace Library.UserControls;
+
+public sealed partial class BookCard : UserControl
 {
-    public sealed partial class BookCard : UserControl
+    public Book Book
     {
-        public BookCard()
+        get { return (Book)GetValue(BookProperty); }
+        set { SetValue(BookProperty, value); }
+    }
+
+    public static readonly DependencyProperty BookProperty =
+        DependencyProperty.Register(nameof(Book), typeof(Book), typeof(BookCard), new PropertyMetadata(null, OnBookChanged));
+
+    private static void OnBookChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is BookCard control && e.NewValue is Book book)
         {
-            this.InitializeComponent();
+            control.Title.Text = book.Title;
+            control.Author.Text = book.Author;
+            control.Category.Text = book.Category;
+            control.Description.Text = book.Description;
+            control.Image.Source = book.ImagePath != null
+                ? new BitmapImage(new Uri(book.ImagePath))
+                : null;
         }
+    }
+
+    public BookCard()
+    {
+        this.InitializeComponent();
     }
 }
