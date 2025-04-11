@@ -7,19 +7,19 @@ using Windows.Storage;
 using Windows.Storage.Pickers;
 using WinRT.Interop;
 
-
 namespace Library.Pages;
 
+// TODO: не змінюється пункт меню в головному вікні
 public sealed partial class AddBookPage : Page
 {
-    private StorageFile selectedImageFile = null;
+    private StorageFile? selectedImageFile;
 
     public AddBookPage()
     {
-        this.InitializeComponent();
+        InitializeComponent();
     }
 
-    private void Save_Click(object sender, RoutedEventArgs e)
+    private async void Save_Click(object sender, RoutedEventArgs e)
     {
         ClearErrors();
 
@@ -28,11 +28,11 @@ public sealed partial class AddBookPage : Page
             Book newBook = new Book(
                 title: TitleTextBox.Text,
                 author: AuthorTextBox.Text,
-                category: CategoryComboBox.SelectedItem?.ToString()!,
+                category: CategoryComboBox.SelectedItem?.ToString() ?? string.Empty,
                 description: DescriptionTextBox.Text
             );
 
-            newBook.ImagePath = SaveImageAync().Result;
+            newBook.ImagePath = await SaveImageAsync() ?? "ms-appx:///Assets/book_cover.jpg";
             Frame.Navigate(typeof(AllBooksPage), newBook);
         }
         catch (ValidationException ex)
@@ -68,14 +68,25 @@ public sealed partial class AddBookPage : Page
         Frame.Navigate(typeof(AllBooksPage));
     }
 
-    private async Task<string> SaveImageAync()
+    private async Task<string?> SaveImageAsync()
     {
         if (selectedImageFile == null) return null;
 
-        var localFolder = ApplicationData.Current.LocalFolder;
-        var newFile = await localFolder.CreateFileAsync(selectedImageFile.Name, CreationCollisionOption.ReplaceExisting);
-        await selectedImageFile.CopyAndReplaceAsync(newFile);
-        return newFile.Name;
+        try
+        {
+            var localFolder = ApplicationData.Current.LocalFolder;
+            var newFile = await localFolder.CreateFileAsync(
+                selectedImageFile.Name,
+                CreationCollisionOption.GenerateUniqueName
+            );
+            await selectedImageFile.CopyAndReplaceAsync(newFile);
+            return newFile.Path;
+        }
+        catch (Exception ex)
+        {
+            ShowError(ImagePathText, $"Помилка збереження зображення: {ex.Message}");
+            return null;
+        }
     }
 
     private void ShowError(TextBlock errorBlock, string message)
@@ -89,5 +100,6 @@ public sealed partial class AddBookPage : Page
         TitleError.Visibility = Visibility.Collapsed;
         AuthorError.Visibility = Visibility.Collapsed;
         CategoryError.Visibility = Visibility.Collapsed;
+        ImagePathText.Visibility = Visibility.Collapsed;
     }
 }

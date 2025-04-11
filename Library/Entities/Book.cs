@@ -73,7 +73,7 @@ public class Book
         {
             Errors[nameof(Title)].Add("Назва книги є обов'язковою.");
         }
-        if (!Regex.IsMatch(_author, @"^[а-яА-ЯіІїЇєЄґҐ\s]+$"))
+        if (!Regex.IsMatch(_title, @"^[а-яА-ЯіІїЇєЄґҐ,\-\s]+$"))
         {
             Errors[nameof(Title)].Add("Назва книги повинен містити лише кириличні символи.");
         }
@@ -92,7 +92,7 @@ public class Book
         {
             Errors[nameof(Author)].Add("Автор книги є обов'язковим.");
         }
-        if (!Regex.IsMatch(_author, @"^[а-яА-ЯіІїЇєЄґҐ\s]+$"))
+        if (!Regex.IsMatch(_author, @"^[а-яА-ЯіІїЇєЄґҐ\-\s]+$"))
         {
             Errors[nameof(Author)].Add("Автор книги повинен містити лише кириличні символи.");
         }

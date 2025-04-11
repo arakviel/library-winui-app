@@ -16,9 +16,11 @@
     <None Remove="Pages\CategoryPage.xaml" />
     <None Remove="Pages\SettingsPage.xaml" />
     <None Remove="Styles\ButtonStyles.xaml" />
+    <None Remove="Styles\PageStyles.xaml" />
     <None Remove="Styles\TextBlockStyles.xaml" />
     <None Remove="Themes\Dark.xaml" />
     <None Remove="Themes\Light.xaml" />
+    <None Remove="UserControls\BookCard.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,6 +48,11 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250310001" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Styles\PageStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Styles\TextBlockStyles.xaml">
@@ -84,6 +91,11 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Themes\Light.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="UserControls\BookCard.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
