@@ -96,6 +96,11 @@ public sealed partial class AllBooksPage : Page
             )
         };
 
+        foreach (var book in booksToAdd)
+        {
+            Books.Add(book);
+        }
+
         // Якщо передано нову книгу через параметри навігації
         if (e.Parameter is Book newBook)
         {

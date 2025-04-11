@@ -3,6 +3,7 @@
     x:Class="Library.Pages.AllBooksPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Library.UserControls"
     xmlns:entity="using:Library.Entities"
     xmlns:local="using:Library.Pages">
 
@@ -10,7 +11,7 @@
 
         <ItemsView x:Name="BooksItemsView" ItemsSource="{x:Bind Books, Mode=OneWay}">
             <ItemsView.ItemTemplate>
-                <DataTemplate x:Key="BookItemTemplate" x:DataType="entity:Book">
+                <DataTemplate x:DataType="entity:Book">
                     <ItemContainer>
                         <Border
                             MaxWidth="350"
