@@ -1,13 +1,29 @@
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Library.Entities;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 
 namespace Library.Pages;
 
-public sealed partial class AllBooksPage : Page
+public sealed partial class AllBooksPage : Page, INotifyPropertyChanged
 {
     public ObservableCollection<Book> Books { get; } = new ObservableCollection<Book>();
+
+    private string _searchText = string.Empty;
+
+    public string SearchText
+    {
+        get => _searchText;
+        set
+        {
+            _searchText = value;
+            OnPropertyChanged();
+        }
+    }
 
     public AllBooksPage()
     {
@@ -105,6 +121,39 @@ public sealed partial class AllBooksPage : Page
         if (e.Parameter is Book newBook)
         {
             Books.Add(newBook);
+        }
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    // Реалізуй це так, щоб воно відновлювало список коли очистити пошук
+    private void SearchButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    {
+        var _books = new List<Book>(Books);
+        if (string.IsNullOrWhiteSpace(SearchText) && SearchText.Length <= 3)
+        {
+
+        }
+
+        var _books = new List<Book>(Books);
+        Books.Clear();
+
+        foreach (var book in _books)
+        {
+            if (book.Title.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
+                book.Author.Contains(SearchText, StringComparison.OrdinalIgnoreCase))
+            {
+                Books.Add(book);
+            }
+            else
+            {
+                Books.Remove(book);
+            }
         }
     }
 }

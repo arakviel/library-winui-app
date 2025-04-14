@@ -7,9 +7,27 @@
     xmlns:entity="using:Library.Entities"
     xmlns:local="using:Library.Pages">
 
-    <Grid Style="{StaticResource PageGridStyle}">
+    <Grid RowDefinitions="Auto, *" Style="{StaticResource PageGridStyle}">
 
-        <ItemsView x:Name="BooksItemsView" ItemsSource="{x:Bind Books, Mode=OneWay}">
+        <RelativePanel Grid.Row="0" HorizontalAlignment="Stretch">
+            <TextBox
+                x:Name="SearhTextBox"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.LeftOf="SearchButton"
+                Text="{x:Bind SearchText, Mode=TwoWay}" />
+            <Button
+                x:Name="SearchButton"
+                Margin="12,0,0,0"
+                Click="SearchButton_Click"
+                RelativePanel.AlignRightWithPanel="True">
+                <FontIcon Glyph="&#xE721;" />
+            </Button>
+        </RelativePanel>
+
+        <ItemsView
+            x:Name="BooksItemsView"
+            Grid.Row="1"
+            ItemsSource="{x:Bind Books, Mode=OneWay}">
             <ItemsView.ItemTemplate>
                 <DataTemplate x:DataType="entity:Book">
                     <ItemContainer>

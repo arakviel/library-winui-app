@@ -11,16 +11,24 @@
                 <TextBox
                     x:Name="TitleTextBox"
                     Header="Назва книги"
-                    PlaceholderText="Введіть назву" />
-                <TextBlock x:Name="TitleError" Style="{StaticResource ErrorTextBlock}" />
+                    PlaceholderText="Введіть назву"
+                    Text="{x:Bind ViewModel.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock
+                    x:Name="TitleErrorTextBlock"
+                    Style="{StaticResource ErrorTextBlock}"
+                    Visibility="{x:Bind OnTitleChanged(ViewModel.Title), Mode=OneWay}" />
             </StackPanel>
 
             <StackPanel>
                 <TextBox
                     x:Name="AuthorTextBox"
                     Header="Автора"
-                    PlaceholderText="Введіть автора" />
-                <TextBlock x:Name="AuthorError" Style="{StaticResource ErrorTextBlock}" />
+                    PlaceholderText="Введіть автора"
+                    Text="{x:Bind ViewModel.Author, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock
+                    x:Name="AuthorErrorTextBlock"
+                    Style="{StaticResource ErrorTextBlock}"
+                    Visibility="{x:Bind OnAuthorChanged(ViewModel.Author), Mode=OneWay}" />
             </StackPanel>
 
             <StackPanel>
@@ -33,7 +41,7 @@
                     <x:String>Фантастика</x:String>
                     <x:String>Фентезі</x:String>
                 </ComboBox>
-                <TextBlock x:Name="CategoryError" Style="{StaticResource ErrorTextBlock}" />
+                <TextBlock x:Name="CategoryErrorTextBlock" Style="{StaticResource ErrorTextBlock}" />
             </StackPanel>
 
             <TextBox
@@ -50,7 +58,7 @@
                     Click="PickImageButton_Click"
                     Content="Вибрати картинку" />
                 <TextBlock
-                    x:Name="ImagePathText"
+                    x:Name="ImagePathTextTextBlock"
                     VerticalAlignment="Center"
                     Text="Картинка не обрана" />
             </StackPanel>

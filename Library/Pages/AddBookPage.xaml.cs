@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Library.Entities;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using RecipeBook.ViewModel;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using WinRT.Interop;
@@ -13,6 +14,7 @@ namespace Library.Pages;
 public sealed partial class AddBookPage : Page
 {
     private StorageFile? selectedImageFile;
+    public AddBookViewModel ViewModel { get; } = new AddBookViewModel();
 
     public AddBookPage()
     {
@@ -38,11 +40,11 @@ public sealed partial class AddBookPage : Page
         catch (ValidationException ex)
         {
             if (ex.Errors.ContainsKey("Title"))
-                ShowError(TitleError, string.Join("\n", ex.Errors["Title"]));
+                ShowError(TitleErrorTextBlock, string.Join("\n", ex.Errors["Title"]));
             if (ex.Errors.ContainsKey("Author"))
-                ShowError(AuthorError, string.Join("\n", ex.Errors["Author"]));
+                ShowError(AuthorErrorTextBlock, string.Join("\n", ex.Errors["Author"]));
             if (ex.Errors.ContainsKey("Category"))
-                ShowError(CategoryError, string.Join("\n", ex.Errors["Category"]));
+                ShowError(CategoryErrorTextBlock, string.Join("\n", ex.Errors["Category"]));
         }
     }
 
@@ -59,7 +61,7 @@ public sealed partial class AddBookPage : Page
         selectedImageFile = await picker.PickSingleFileAsync();
         if (selectedImageFile != null)
         {
-            ImagePathText.Text = selectedImageFile.Name;
+            ImagePathTextTextBlock.Text = selectedImageFile.Name;
         }
     }
 
@@ -84,7 +86,7 @@ public sealed partial class AddBookPage : Page
         }
         catch (Exception ex)
         {
-            ShowError(ImagePathText, $"Помилка збереження зображення: {ex.Message}");
+            ShowError(ImagePathTextTextBlock, $"Помилка збереження зображення: {ex.Message}");
             return null;
         }
     }
@@ -97,9 +99,37 @@ public sealed partial class AddBookPage : Page
 
     private void ClearErrors()
     {
-        TitleError.Visibility = Visibility.Collapsed;
-        AuthorError.Visibility = Visibility.Collapsed;
-        CategoryError.Visibility = Visibility.Collapsed;
-        ImagePathText.Visibility = Visibility.Collapsed;
+        TitleErrorTextBlock.Visibility = Visibility.Collapsed;
+        AuthorErrorTextBlock.Visibility = Visibility.Collapsed;
+        CategoryErrorTextBlock.Visibility = Visibility.Collapsed;
+        ImagePathTextTextBlock.Visibility = Visibility.Collapsed;
+    }
+
+    private Visibility OnTitleChanged(string title)
+    {
+        if (string.IsNullOrEmpty(title)) return Visibility.Collapsed;
+
+        Book book = new Book();
+        book.Title = title;
+        if (book.Errors.ContainsKey("Title"))
+        {
+            ShowError(TitleErrorTextBlock, string.Join("\n", book.Errors["Title"]));
+            return Visibility.Visible;
+        }
+        return Visibility.Collapsed;
+    }
+
+    private Visibility OnAuthorChanged(string author)
+    {
+        if (string.IsNullOrEmpty(author)) return Visibility.Collapsed;
+
+        Book book = new Book();
+        book.Author = author;
+        if (book.Errors.ContainsKey("Author"))
+        {
+            ShowError(AuthorErrorTextBlock, string.Join("\n", book.Errors["Author"]));
+            return Visibility.Visible;
+        }
+        return Visibility.Collapsed;
     }
 }

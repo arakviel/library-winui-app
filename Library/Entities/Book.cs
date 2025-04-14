@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using Library.Pages;
 
@@ -53,6 +54,7 @@ public class Book
     public const int MaxTitleLength = 128;
     public const int MaxAuthorLength = 256;
 
+    public Book() { }
     public Book(string title, string author, string category, string description = "", string? imagePath = null)
     {
         Title = title;
@@ -64,58 +66,51 @@ public class Book
         if (!IsValid()) throw new ValidationException(Errors);
     }
 
-    private void ValidateTitle()
+    private void ValidateTitle([CallerMemberName] string? propertyName = null)
     {
-        Errors.Remove(nameof(Title));
-        Errors[nameof(Title)] = new List<string>();
+        Errors.Remove(propertyName);
+        Errors[propertyName] = new List<string>();
 
         if (string.IsNullOrWhiteSpace(_title))
-        {
-            Errors[nameof(Title)].Add("Назва книги є обов'язковою.");
-        }
+            Errors[propertyName].Add("Назва книги є обов'язковою.");
         if (!Regex.IsMatch(_title, @"^[а-яА-ЯіІїЇєЄґҐ,\-\s]+$"))
-        {
-            Errors[nameof(Title)].Add("Назва книги повинен містити лише кириличні символи.");
-        }
+            Errors[propertyName].Add("Назва книги повинен містити лише кириличні символи.");
         if (_title.Length > MaxTitleLength)
-        {
-            Errors[nameof(Title)].Add($"Назва книги не повинна перевищувати {MaxTitleLength} символів.");
-        }
+            Errors[propertyName].Add($"Назва книги не повинна перевищувати {MaxTitleLength} символів.");
+
+        if (Errors[propertyName].Count == 0) Errors.Remove(propertyName);
     }
 
     private void ValidateAuthor()
     {
-        Errors.Remove(nameof(Author));
-        Errors[nameof(Author)] = new List<string>();
+        const string AuthorPropertyName = nameof(Author);
+
+        Errors.Remove(AuthorPropertyName);
+        Errors[AuthorPropertyName] = new List<string>();
 
         if (string.IsNullOrWhiteSpace(_author))
-        {
-            Errors[nameof(Author)].Add("Автор книги є обов'язковим.");
-        }
+            Errors[AuthorPropertyName].Add("Автор книги є обов'язковим.");
         if (!Regex.IsMatch(_author, @"^[а-яА-ЯіІїЇєЄґҐ\-\s]+$"))
-        {
-            Errors[nameof(Author)].Add("Автор книги повинен містити лише кириличні символи.");
-        }
+            Errors[AuthorPropertyName].Add("Автор книги повинен містити лише кириличні символи.");
         var authorWords = _author.Split(' ', StringSplitOptions.RemoveEmptyEntries);
         if (authorWords.Length < 2 || authorWords.Length > 3)
-        {
-            Errors[nameof(Author)].Add("Автор книги повинен містити від 2 до 3 слів.");
-        }
+            Errors[AuthorPropertyName].Add("Автор книги повинен містити від 2 до 3 слів.");
         if (_author.Length > MaxAuthorLength)
-        {
-            Errors[nameof(Author)].Add($"Автор книги не повинен перевищувати {MaxAuthorLength} символів.");
-        }
+            Errors[AuthorPropertyName].Add($"Автор книги не повинен перевищувати {MaxAuthorLength} символів.");
+
+        if (Errors[AuthorPropertyName].Count == 0) Errors.Remove(AuthorPropertyName);
     }
 
     private void ValidateCategory()
     {
-        Errors.Remove(nameof(Category));
-        Errors[nameof(Category)] = new List<string>();
+        const string CategoryPropertyName = nameof(Category);
 
-        if (string.IsNullOrWhiteSpace(_category))
-        {
-            Errors[nameof(Category)].Add("Категорія книги є обов'язковою.");
-        }
+        Errors.Remove(CategoryPropertyName);
+        Errors[CategoryPropertyName] = new List<string>();
+
+        if (string.IsNullOrWhiteSpace(_category)) Errors[nameof(Category)].Add("Категорія книги є обов'язковою.");
+
+        if (Errors[CategoryPropertyName].Count == 0) Errors.Remove(CategoryPropertyName);
     }
 
     public bool IsValid()
@@ -123,25 +118,7 @@ public class Book
         ValidateTitle();
         ValidateAuthor();
         ValidateCategory();
-        RemoveEmptyListOfErrors();
 
         return Errors.Count == 0;
-    }
-
-    private void RemoveEmptyListOfErrors()
-    {
-        var keysToRemove = new List<string>();
-        foreach (var key in Errors.Keys)
-        {
-            if (Errors[key].Count == 0)
-            {
-                keysToRemove.Add(key);
-            }
-        }
-
-        foreach (var key in keysToRemove)
-        {
-            Errors.Remove(key);
-        }
     }
 }
